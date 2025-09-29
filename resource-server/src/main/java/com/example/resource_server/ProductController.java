@@ -18,11 +18,12 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<ListProductResponse> getAllProduct(Authentication authentication){
        var jwt = (Jwt) authentication.getPrincipal();
+       final String username = jwt.getClaim("username");
        List<Product> products = productService.getAllProduct();
        return ResponseEntity.ok(
            ListProductResponse.builder()
                .code(200)
-               .message("User: %s Get all products successfully".formatted(jwt.getSubject()))
+               .message("User: %s Get all products successfully".formatted(username))
                .products(products)
                .build()
        );
