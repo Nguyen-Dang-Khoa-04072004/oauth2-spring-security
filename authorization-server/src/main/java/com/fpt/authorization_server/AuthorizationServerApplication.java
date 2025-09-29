@@ -23,6 +23,8 @@ public class AuthorizationServerApplication implements CommandLineRunner {
 			User.builder()
 				.username("khoanguyen")
 				.password(passwordEncoder.encode("password"))
+				.email("khoanguyen@gmail.com")
+				.profileImageUrl("http://usercontent.spring.example.com")
 				.role(Role.ROLE_user)
 				.build()
 		);

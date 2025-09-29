@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,6 +34,10 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 import java.util.function.Function;
 
 
@@ -70,6 +75,7 @@ public class SecurityConfig {
                 authorize
                     .anyRequest().authenticated()
             )
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .exceptionHandling((exceptions) -> exceptions
                 .defaultAuthenticationEntryPointFor(
                     new LoginUrlAuthenticationEntryPoint("/login"),
@@ -112,7 +118,7 @@ public class SecurityConfig {
             .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
             .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
             .scope(OidcScopes.OPENID)
-            .redirectUri("https://docs.spring.io/spring-security/reference/index.html")
+            .redirectUri("http://localhost:5173/callback")
             .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
             .build();
         return new InMemoryRegisteredClientRepository(registeredClient);
@@ -145,5 +151,17 @@ public class SecurityConfig {
                 });
             }
         };
+    }
+
+    @Bean
+    UrlBasedCorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }
