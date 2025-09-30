@@ -4,6 +4,7 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -41,6 +42,7 @@ import java.util.Arrays;
 import java.util.function.Function;
 
 
+@Slf4j
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -94,6 +96,9 @@ public class SecurityConfig {
             .authorizeHttpRequests((authorize) -> authorize
                 .anyRequest().authenticated()
             )
+            .logout(l -> {
+                l.logoutSuccessUrl("http://localhost:5173");
+            })
             .formLogin(Customizer.withDefaults());
 
         return http.build();
