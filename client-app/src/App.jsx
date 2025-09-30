@@ -1,19 +1,37 @@
-import './App.css'
-import { Route, Routes } from 'react-router'
-import HomePage from './HomePage'
-import ProductPage from './ProductPage'
-import Callback from './Callback'
+import "./App.css";
+import { Route, Routes } from "react-router";
+import { routes } from "./routes/routes";
+import React from "react";
+import AuthProvider from "./component/auth/Auth";
 function App() {
-
   return (
     <>
-        <Routes>
-            <Route path='/' element={<HomePage/>}/>    
-            <Route path='/callback' element={<Callback/>}/>
-            <Route path='/products' element={<ProductPage/>}/>
-        </Routes> 
+      <Routes>
+        {routes.map((route) => {
+          const Layout = route.layout ?? React.Fragment;
+          const Page = route.component;
+          return (
+            <Route
+              path={route.path}
+              element={
+                route.isAuth ? (
+                  <AuthProvider>
+                    <Layout>
+                      <Page />
+                    </Layout>
+                  </AuthProvider>
+                ) : (
+                  <Layout>
+                    <Page />
+                  </Layout>
+                )
+              }
+            />
+          );
+        })}
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

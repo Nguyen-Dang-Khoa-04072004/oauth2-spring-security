@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 function Callback() {
   const [params, setParams] = useSearchParams();
+  const navigate = useNavigate() 
   useEffect(() => {
     const code = params.get("code");
-    console.log(code);
     const headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
     headers.append("Authorization", `Basic ${btoa("client:secrets")}`);
@@ -28,10 +28,11 @@ function Callback() {
         }
       })
       .then((json) => {
-        console.log(json);
+        localStorage.setItem("tokenId",json["id_token"])
         localStorage.setItem("accessToken", json["access_token"]);
+        localStorage.setItem("refreshToken",json["refresh_token"])
         setParams("");
-        window.location.replace("/products")
+        navigate("/products",{replace: true})
       })
       .catch((err) => console.log(err));
   }, []);
