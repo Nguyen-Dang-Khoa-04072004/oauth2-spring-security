@@ -21,23 +21,23 @@ public class ResourceServerApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		List<Product> products = List.of(
-			Product.builder()
-				.productName("Milo")
-				.description("Some description about average")
-				.price(20000L)
-				.build(),
-			Product.builder()
-				.productName("KFC chicken")
-				.description("Some description about food")
-				.price(34000L)
-				.build(),
-			Product.builder()
-				.productName("Nike")
-				.description("Some description about shoes")
-				.price(5000000L)
-				.build()
-		);
-		productRepository.saveAll(products);
+//		List<Product> products = List.of(
+//			Product.builder()
+//				.productName("Milo")
+//				.description("Some description about average")
+//				.price(20000L)
+//				.build(),
+//			Product.builder()
+//				.productName("KFC chicken")
+//				.description("Some description about food")
+//				.price(34000L)
+//				.build(),
+//			Product.builder()
+//				.productName("Nike")
+//				.description("Some description about shoes")
+//				.price(5000000L)
+//				.build()
+//		);
+//		productRepository.saveAll(products);
 	}
 }
