@@ -30,6 +30,6 @@ mvn spring-boot:run
 ```
 # DOCUMENTS
 + [API Specification](./docs/API.md)
-+ [Data Dictionary](./docs/API.md)
++ [Data Dictionary](./docs/data-dictionary.md)
 + [Sequence Diagram](./images/sequence-diagram.png)
 + [ERD Diagram](./images/sequence-diagram.png)
