@@ -14,10 +14,11 @@ import java.util.UUID;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "product_id")
     private UUID id;
     private String productName;
-    @Enumerated(EnumType.STRING)
-    private Category category;
+    private String productImageUrl;
     private String description;
+    private Integer measure;
     private Long price;
 }

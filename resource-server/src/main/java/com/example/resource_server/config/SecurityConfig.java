@@ -18,7 +18,10 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
        return http
            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-           .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+           .authorizeHttpRequests(auth ->{
+               auth.requestMatchers("api/v1/products/**").hasAuthority("SCOPE_openid");
+               auth.anyRequest().authenticated();
+           })
            .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
            .build();
     }
