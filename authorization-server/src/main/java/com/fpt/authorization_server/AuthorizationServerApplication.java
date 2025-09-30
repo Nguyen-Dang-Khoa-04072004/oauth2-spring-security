@@ -19,14 +19,6 @@ public class AuthorizationServerApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		userRepository.save(
-			User.builder()
-				.username("khoanguyen")
-				.password(passwordEncoder.encode("password"))
-				.email("khoanguyen@gmail.com")
-				.profileImageUrl("http://usercontent.spring.example.com")
-				.role(Role.ROLE_user)
-				.build()
-		);
+		System.out.println(passwordEncoder.encode("password"));
 	}
 }
