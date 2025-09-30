@@ -11,7 +11,7 @@
 ## PRODUCT TABLE
 | Column | Data type | Description |
 |:---|:---|:---|
-| product_id | bigint | product's identity |
+| product_id | nvarchar | product's identity |
 | product_name | nvarchar | product's name |
 | price | bigint | product's price|
 | measure | int | product's measure |
