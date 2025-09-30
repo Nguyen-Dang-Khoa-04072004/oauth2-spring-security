@@ -1,5 +1,8 @@
-package com.example.resource_server;
+package com.example.resource_server.controller;
 
+import com.example.resource_server.entity.Product;
+import com.example.resource_server.response.ListProductResponse;
+import com.example.resource_server.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;

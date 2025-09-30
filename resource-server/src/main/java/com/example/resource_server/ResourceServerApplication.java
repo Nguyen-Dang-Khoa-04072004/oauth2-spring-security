@@ -1,12 +1,14 @@
 package com.example.resource_server;
 
+import com.example.resource_server.entity.Category;
+import com.example.resource_server.entity.Product;
+import com.example.resource_server.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.List;
-import java.util.UUID;
 
 @SpringBootApplication
 @RequiredArgsConstructor

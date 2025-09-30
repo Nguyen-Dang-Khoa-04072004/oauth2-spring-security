@@ -1,4 +1,4 @@
-package com.example.resource_server;
+package com.example.resource_server.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
