@@ -32,4 +32,4 @@ mvn spring-boot:run
 + [API Specification](./docs/API.md)
 + [Data Dictionary](./docs/data-dictionary.md)
 + [Sequence Diagram](./images/sequence-diagram.png)
-+ [ERD Diagram](./images/sequence-diagram.png)
++ [ERD Diagram](./images/erd-diagram-v1.png)
