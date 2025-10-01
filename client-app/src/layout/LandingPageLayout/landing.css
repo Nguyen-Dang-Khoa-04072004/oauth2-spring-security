@@ -1,0 +1,8 @@
+.landing-container {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgba(248, 243, 243, 1);
+  height: 100vh;
+}
