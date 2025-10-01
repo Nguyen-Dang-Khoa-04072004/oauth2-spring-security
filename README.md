@@ -1,9 +1,20 @@
 # FPT Food Store
-A simple food store website 
+A simple food store website allows users to securely log in with FPT Food Store account. The site supports Single Sign-On (SSO) using a custom-built authentication system powered by Spring Security and Oauth2 client is implemented by myself. Users can authenticate once through a central identity server and seamlessly access multiple services within the platform without logging in again. This setup improves user experience and enforces consistent security across all applications. 
 # Requirements
 + Java 21
 + Maven
-+ Node 
++ Node
+# Technologies
+Backend
++ Spring boot
++ Spring data JPA
++ Spring security
++ Spring resource server
++ Spring authorization server
+Frontend
++ reactJS
++ redux toolkit
++ axios
 # Installation
 1. clone the repo
 ```bash
