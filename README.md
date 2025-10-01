@@ -11,6 +11,7 @@ Backend
 + Spring security
 + Spring resource server
 + Spring authorization server
+
 Frontend
 + reactJS
 + redux toolkit
