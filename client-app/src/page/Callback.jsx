@@ -20,7 +20,6 @@ function Callback() {
       body: urlencoded.toString(),
       redirect: "follow",
     };
-    console.log(requestOptions);
     fetch("http://localhost:8081/oauth2/token", requestOptions)
       .then((response) => {
         if (response.ok) {

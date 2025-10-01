@@ -1,27 +1,23 @@
 import { useEffect, useState } from "react";
 import "./product.css";
 import ProductCard from "./ProductCard";
+import { productApi } from "../../api/product";
+import { useSelector } from "react-redux";
 function ProductPage() {
   const [products, setProducts] = useState([]);
-
+const {isAuth} = useSelector(state => state.user)
     useEffect(() => {
-      fetch("http://localhost:8082/api/v1/products", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      })
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          }
+        productApi.get("/products")
+        .then(res => {
+            if(res.status === 200){
+                return res.data
+            }
         })
-        .then((json) => {
-          console.log(json);
-          setProducts(json.products);
+        .then(data => {
+            setProducts(data.products)
         })
-        .catch((err) => console.log(err));
-    }, []);
+        .catch(err => console.log(err))
+    }, [isAuth]);
   return (
     <div className="product-page">
       {products.map((product) => (
