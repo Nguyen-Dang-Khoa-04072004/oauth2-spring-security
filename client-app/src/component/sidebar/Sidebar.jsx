@@ -30,7 +30,6 @@ function Sidebar() {
         <div className="category-item">Thịt, cá, trứng, hải sản </div>
         <div className="category-item">Thịt, cá, trứng, hải sản </div>
         <div className="category-item">Thịt, cá, trứng, hải sản </div>
-        <div className="category-item">Thịt, cá, trứng, hải sản </div>
       </div>
     </div>
   );
