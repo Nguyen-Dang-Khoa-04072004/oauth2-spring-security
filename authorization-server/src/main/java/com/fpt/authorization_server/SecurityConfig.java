@@ -77,6 +77,7 @@ public class SecurityConfig {
                 authorize
                     .anyRequest().authenticated()
             )
+            .formLogin(Customizer.withDefaults())
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .exceptionHandling((exceptions) -> exceptions
                 .defaultAuthenticationEntryPointFor(
