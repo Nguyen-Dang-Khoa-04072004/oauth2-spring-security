@@ -33,3 +33,11 @@ mvn spring-boot:run
 + [Data Dictionary](./docs/data-dictionary.md)
 + [Sequence Diagram](./images/sequence-diagram.png)
 + [ERD Diagram](./images/erd-diagram-v1.png)
+
+# SCREEN SHOTS
+## LANDING PAGE
+![Landing Page](./images/screen-shot-1.png)
+## PRODUCT PAGE
+![Product Page](./images/screen-shot-2.png)
+# DEMO 
+## Login with Oauth Client
