@@ -40,5 +40,5 @@ mvn spring-boot:run
 ## PRODUCT PAGE
 ![Product Page](./images/screen-shot-2.png)
 # DEMO 
-## Login with Oauth Client
+## Oauth client log in
 ![Oauth client log in demo](https://github.com/user-attachments/assets/2b6a2b58-899f-47ca-a0eb-6b3f2122d1e2)
