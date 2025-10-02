@@ -4,32 +4,32 @@
   background-color: var(--primary-color);
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 50;
   display: flex;
   justify-content: center;
 }
 
-.header__search-bar{
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.header__search-bar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
-.header__logo{
-    display: flex;
-    align-items: center;
+.header__logo {
+  display: flex;
+  align-items: center;
 }
 
-
-.header__main{
-    width: 90%;
-    display: flex;
-    justify-content: end;
+.header__main {
+  width: 90%;
+  display: flex;
+  justify-content: end;
 }
 
 .header__userinfo {
-    padding-left: 10px;
+  padding-left: 10px;
   display: flex;
   align-items: center;
   justify-content: end;
@@ -53,26 +53,47 @@
   border-radius: 50%;
 }
 
-.search-bar__input-bar{
-    display: flex;
-    padding: 7px 15px;
-    align-items: center;
-    width: 70%;
-    background-color: white;
-    border-radius: 32px;
-    gap: 15px;
+.search-bar__input-bar {
+  position: relative;
+  display: flex;
+  padding: 7px 15px;
+  align-items: center;
+  width: 40%;
+  background-color: white;
+  border-radius: 28px;
+  gap: 15px;
+  z-index: 80;
+  transition: all 0.4s ease-in-out;
 }
 
-.search-bar__input-bar input{
-    border: none;
-    font-size: 16px;
-    flex: 1;
-    height: 100%;
-    background-color: none;
-    outline: none;
-    color: var(--primary-color);
+.search-bar__input-bar:focus-within {
+  width: 70%;
 }
 
-.search-bar__input-bar input::placeholder{
-    color: var(--primary-color);
+.search-bar__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.446);
+  z-index: 2;
+  visibility: hidden;
+}
+
+.search-bar__input-bar input:focus > .search-bar__overlay {
+  visibility: visible;
+}
+.search-bar__input-bar input {
+  border: none;
+  font-size: 16px;
+  flex: 1;
+  height: 100%;
+  background-color: none;
+  outline: none;
+  color: var(--primary-color);
+}
+
+.search-bar__input-bar input::placeholder {
+  color: var(--primary-color);
 }
