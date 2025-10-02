@@ -3,11 +3,11 @@
 }
 
 .product-page__heading {
-    padding-top: 15px;
-    padding-left: 15px;
-    font-size: 25px;
-    font-weight: 800;
-    color: var(--primary-color);
+  padding-top: 15px;
+  padding-left: 15px;
+  font-size: 25px;
+  font-weight: 800;
+  color: var(--primary-color);
 }
 
 .product-page__content {
@@ -41,6 +41,8 @@
 
 .product-card:hover {
   opacity: 0.8;
+  box-shadow: 0 0 0 2px white,
+    0.3em 0.3em 1em rgb(243 112 33 / 80%);
 }
 
 .product-card__product-image {
