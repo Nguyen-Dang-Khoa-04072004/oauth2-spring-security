@@ -30,6 +30,7 @@ import org.springframework.security.oauth2.server.authorization.config.annotatio
 import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationContext;
 import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
+import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
 import org.springframework.security.oauth2.server.authorization.token.*;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.web.SecurityFilterChain;
@@ -38,6 +39,7 @@ import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.function.Function;
 
@@ -94,11 +96,15 @@ public class SecurityConfig {
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
         throws Exception {
         http
+            .csrf(csrf -> csrf.ignoringRequestMatchers("/logout"))
             .authorizeHttpRequests((authorize) -> authorize
                 .anyRequest().authenticated()
             )
             .logout(l -> {
                 l.logoutSuccessUrl("http://localhost:5173");
+                l.invalidateHttpSession(true);
+                l.clearAuthentication(true);
+                l.deleteCookies("JSESSIONID");
             })
             .formLogin(Customizer.withDefaults());
 
@@ -125,7 +131,14 @@ public class SecurityConfig {
             .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
             .scope(OidcScopes.OPENID)
             .redirectUri("http://localhost:5173/callback")
-            .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
+            .postLogoutRedirectUri("http://localhost:5173")
+            .tokenSettings(TokenSettings.builder()
+                .accessTokenTimeToLive(Duration.ofSeconds(10))
+                .refreshTokenTimeToLive(Duration.ofSeconds(37))
+                .build())
+            .clientSettings(ClientSettings.builder()
+                .requireAuthorizationConsent(true)
+                .build())
             .build();
         return new InMemoryRegisteredClientRepository(registeredClient);
     }
