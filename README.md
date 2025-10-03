@@ -43,8 +43,8 @@ mvn spring-boot:run
 # DOCUMENTS
 + [API Specification](./docs/API.md)
 + [Data Dictionary](./docs/data-dictionary.md)
-+ [Sequence Diagram](./images/sequence-diagram.png)
-+ [ERD Diagram](./images/erd-diagram-v1.png)
++ [Sequence Diagram](./images/sequence-diagram-v2.png)
++ [ERD Diagram](./images/erd-diagram-v2.png)
 
 # SCREEN SHOTS
 ## LANDING PAGE
