@@ -163,6 +163,7 @@ public class SecurityConfig {
                     User user = (User) context.getPrincipal().getPrincipal();
                     claims.put("sub",user.getId());
                     claims.put("username",user.getUsername());
+                    claims.put("role",user.getAuthorities());
                     claims.put("email",user.getEmail());
                     claims.put("imageProfile",user.getProfileImageUrl());
                     claims.remove("aud");
