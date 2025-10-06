@@ -2,6 +2,7 @@ package com.example.resource_server.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -13,8 +14,23 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
+@Profile("")
 public class SecurityConfig {
+
     @Bean
+    @Profile("dev")
+    SecurityFilterChain securityFilterChainDev(HttpSecurity http) throws Exception {
+        return http
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            .authorizeHttpRequests(auth ->{
+                auth.anyRequest().permitAll();
+            })
+            .oauth2ResourceServer(auth -> auth.disable())
+            .build();
+    }
+
+    @Bean
+    @Profile("!dev")
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
        return http
            .cors(cors -> cors.configurationSource(corsConfigurationSource()))

@@ -1,0 +1,8 @@
+--liquibase formatted sql
+
+--changeset khoand107:1
+
+CREATE TABLE IF NOT EXISTS product {
+    product_id varchar(32) PRIMARY KEY
+    product_name varchar(256) NOT NULL
+};
