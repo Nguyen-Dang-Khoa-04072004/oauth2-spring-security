@@ -24,6 +24,21 @@ public interface ProductService {
     Product getProductById(UUID productId);
 
     /**
+     * Get all products have a given category
+     *
+     * @param categoryId category's identity
+     * @return list of products that have a given category id
+     */
+    List<Product> getAllProductByCategoryId(Long categoryId);
+
+    /**
+     * get all products hava a given sub-category
+     *
+     * @param subCategoryId sub-category's identity
+     * @return list of products that have a given sub-category id
+     */
+    List<Product> getAllProductBySubCategoryId(Long subCategoryId);
+    /**
      * create a new product
      *
      * @param request product's details

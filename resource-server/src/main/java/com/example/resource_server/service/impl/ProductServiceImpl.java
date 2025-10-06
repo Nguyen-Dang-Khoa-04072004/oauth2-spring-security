@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     @Override
     public List<Product> getAllProduct() {
@@ -26,6 +26,16 @@ class ProductServiceImpl implements ProductService {
     @Override
     public Product getProductById(UUID productId) {
         return productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException(null));
+    }
+
+    @Override
+    public List<Product> getAllProductByCategoryId(Long categoryId) {
+        return List.of();
+    }
+
+    @Override
+    public List<Product> getAllProductBySubCategoryId(Long subCategoryId) {
+        return List.of();
     }
 
     @Override
