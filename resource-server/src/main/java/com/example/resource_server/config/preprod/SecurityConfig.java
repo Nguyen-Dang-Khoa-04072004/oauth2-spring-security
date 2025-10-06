@@ -1,4 +1,4 @@
-package com.example.resource_server.config;
+package com.example.resource_server.config.preprod;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,23 +14,10 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-@Profile("")
+@Profile("preprod")
 public class SecurityConfig {
 
     @Bean
-    @Profile("dev")
-    SecurityFilterChain securityFilterChainDev(HttpSecurity http) throws Exception {
-        return http
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .authorizeHttpRequests(auth ->{
-                auth.anyRequest().permitAll();
-            })
-            .oauth2ResourceServer(auth -> auth.disable())
-            .build();
-    }
-
-    @Bean
-    @Profile("!dev")
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
        return http
            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
