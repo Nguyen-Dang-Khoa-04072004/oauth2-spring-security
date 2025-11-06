@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,13 +36,17 @@ import org.springframework.security.oauth2.server.authorization.token.*;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.Set;
 import java.util.function.Function;
+
+import static org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration.applyDefaultSecurity;
 
 
 @Slf4j
@@ -68,16 +73,15 @@ public class SecurityConfig {
             OAuth2AuthorizationServerConfigurer.authorizationServer();
 
         http
+            .authorizeHttpRequests(auth -> {
+                auth.anyRequest().authenticated();
+            })
             .securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
             .with(authorizationServerConfigurer, (authorizationServer) ->
                 authorizationServer
                     .oidc(oidc -> {
                         oidc.userInfoEndpoint(userInfo -> userInfo.userInfoMapper(userInfoMapper));
                     })
-            )
-            .authorizeHttpRequests((authorize) ->
-                authorize
-                    .anyRequest().authenticated()
             )
             .formLogin(Customizer.withDefaults())
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -87,7 +91,6 @@ public class SecurityConfig {
                     new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
                 )
             );
-
         return http.build();
     }
 
@@ -96,12 +99,15 @@ public class SecurityConfig {
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
         throws Exception {
         http
-            .csrf(csrf -> csrf.ignoringRequestMatchers("/logout"))
-            .authorizeHttpRequests((authorize) -> authorize
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
                 .anyRequest().authenticated()
             )
             .logout(l -> {
-                l.logoutSuccessUrl("http://localhost:5173");
+                l.logoutSuccessHandler((request, response, authentication) -> {
+                    String redirectUri = request.getParameter("post_logout_redirect_uri");
+                    response.sendRedirect(redirectUri);
+                });
                 l.invalidateHttpSession(true);
                 l.clearAuthentication(true);
                 l.deleteCookies("JSESSIONID");
@@ -130,14 +136,14 @@ public class SecurityConfig {
             .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
             .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
             .scope(OidcScopes.OPENID)
-            .redirectUri("http://localhost:5173/callback")
-            .postLogoutRedirectUri("http://localhost:5173")
+            .redirectUri("http://localhost:3000/callback")
+            .postLogoutRedirectUri("http://localhost:3000/admin/home")
             .tokenSettings(TokenSettings.builder()
-                .accessTokenTimeToLive(Duration.ofSeconds(10))
-                .refreshTokenTimeToLive(Duration.ofSeconds(37))
+                .accessTokenTimeToLive(Duration.ofMinutes(5))
+                .refreshTokenTimeToLive(Duration.ofDays(3))
                 .build())
             .clientSettings(ClientSettings.builder()
-                .requireAuthorizationConsent(true)
+                .requireAuthorizationConsent(false)
                 .build())
             .build();
         return new InMemoryRegisteredClientRepository(registeredClient);
@@ -165,7 +171,7 @@ public class SecurityConfig {
                     claims.put("username",user.getUsername());
                     claims.put("role",user.getAuthorities());
                     claims.put("email",user.getEmail());
-                    claims.put("imageProfile",user.getProfileImageUrl());
+                    claims.put("profileImageUrl",user.getProfileImageUrl());
                     claims.remove("aud");
                     claims.remove("nbf");
                 });
@@ -176,7 +182,7 @@ public class SecurityConfig {
     @Bean
     UrlBasedCorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173","http://localhost:3000"));
         configuration.setAllowedMethods(Arrays.asList("*"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);

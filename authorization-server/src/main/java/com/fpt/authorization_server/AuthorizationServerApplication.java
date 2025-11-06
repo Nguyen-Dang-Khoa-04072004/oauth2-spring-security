@@ -10,15 +10,10 @@ import java.util.List;
 
 @SpringBootApplication
 @RequiredArgsConstructor
-public class AuthorizationServerApplication implements CommandLineRunner {
+public class AuthorizationServerApplication {
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 	public static void main(String[] args) {
 		SpringApplication.run(AuthorizationServerApplication.class, args);
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
-		System.out.println(passwordEncoder.encode("password"));
 	}
 }
